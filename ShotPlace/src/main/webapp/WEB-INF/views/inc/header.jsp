@@ -8,7 +8,7 @@
 <c:choose>
 	<c:when test="${empty check}">
 		<input type="button" value="로그인" onclick="location.href='#'" />
-		<input type="button" value="회원가입" onclick="location.href='#'" />
+		<input type="button" value="회원가입" onclick="location.href='/ShotPlace/users/signUp'" />
 	</c:when>
 	<c:otherwise>
 		<input type="button" value="로그아웃" onclick="location.href='#'" />
