@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.my.mybatis.UserMapper">
+	
+	<insert id="insert" parameterType="User">
+		INSERT INTO member VALUES (#{email}, #{passwd}, #{name}, #{mobile})
+	</insert>
+
+	<select id="login" resultType="User">
+		SELECT email, passwd, name, mobile FROM member 
+		WHERE email = #{email} AND passwd = #{passwd}
+	</select>
+	
+	
+</mapper>

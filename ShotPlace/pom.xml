@@ -9,10 +9,19 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+		<org.springframework-version>4.1.4.RELEASE</org.springframework-version>
+		
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
+	
+	<repositories>
+	    <repository>
+	        <id>mesir-repo</id>
+	        <url>http://mesir.googlecode.com/svn/trunk/mavenrepo</url>
+	    </repository>
+	</repositories>
+	
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -39,11 +48,24 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>	
+		<!--spring-jdbc  -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency>    
+		</dependency>
+		<!--jdbc  -->
+		<dependency>
+		    <groupId>com.oracle</groupId>
+		    <artifactId>ojdbc14</artifactId>
+		    <version>10.2.0.4.0</version>
+		</dependency>
+	    <!-- commons-dbcp -->
+	    <dependency>
+	      <groupId>commons-dbcp</groupId>
+	      <artifactId>commons-dbcp</artifactId>
+	      <version>1.4</version>
+	    </dependency> 				    
 	    <!-- MyBatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -55,12 +77,6 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-	    <!-- commons-dbcp -->
-	    <dependency>
-	      <groupId>commons-dbcp</groupId>
-	      <artifactId>commons-dbcp</artifactId>
-	      <version>1.4</version>
-	    </dependency>
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
