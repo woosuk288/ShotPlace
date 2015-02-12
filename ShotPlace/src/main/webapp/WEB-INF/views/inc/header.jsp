@@ -11,8 +11,8 @@
 		<input type="button" value="회원가입" onclick="location.href='/ShotPlace/users/signUp'" />
 	</c:when>
 	<c:otherwise>
-		<input type="button" value="로그아웃" onclick="location.href='#'" />
-		<input type="button" value="내정보수정" onclick="location.href='#'" />
+		<input type="button" value="로그아웃" onclick="location.href='/ShotPlace/users/logout'" />
+		<input type="button" value="내정보수정" onclick="location.href='/ShotPlace/users/editAccount'" />
 	</c:otherwise>
 </c:choose>
 </div>

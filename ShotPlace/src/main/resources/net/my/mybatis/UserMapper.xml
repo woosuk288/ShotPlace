@@ -14,6 +14,18 @@
 		SELECT email, passwd, name, mobile FROM member 
 		WHERE email = #{email} AND passwd = #{passwd}
 	</select>
+
+	<update id="modify" parameterType="User">
+		UPDATE member SET name = #{name}, mobile = #{mobile} 
+		WHERE email = #{email} AND passwd = #{passwd}
+	</update>
 	
+	<update id="changePasswd" parameterType="User">
+		UPDATE member SET passwd = #{passwd} WHERE email = #{email}
+	</update>
+	
+	<delete id="byeMember" parameterType="User">
+		DELETE FROM member WHERE email = #{email}
+	</delete>	
 	
 </mapper>

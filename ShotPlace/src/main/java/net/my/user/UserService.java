@@ -6,4 +6,12 @@ public interface UserService {
 	
 	public User login(String email, String passwd);
 
+	public int modify(User user);
+
+	public void changePasswd(User user);
+
+	public void byeMember(User user);
+
+	
+
 }

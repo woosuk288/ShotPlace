@@ -20,4 +20,21 @@ public class UserServiceImpl implements UserService {
 		return userMapper.login(email, passwd);
 	}
 
+	@Override
+	public int modify(User user) {
+		return userMapper.modify(user);
+	}
+
+	@Override
+	public void changePasswd(User user) {
+		userMapper.changePasswd(user);
+		
+	}
+
+	@Override
+	public void byeMember(User user) {
+		userMapper.byeMember(user);
+		
+	}
+
 }

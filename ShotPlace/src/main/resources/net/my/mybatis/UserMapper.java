@@ -10,4 +10,10 @@ public interface UserMapper {
 
 	public User login(@Param("email") String email, @Param("passwd") String passwd);
 
+	public int modify(User user);
+
+	public void changePasswd(User user);
+
+	public void byeMember(User user);
+
 }
