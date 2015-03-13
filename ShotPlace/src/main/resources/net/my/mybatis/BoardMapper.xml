@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.my.mybatis.BoardMapper">
+
+	<select id="getArticleList" parameterType="hashmap" resultType="Article">
+		SELECT articleno, title, regdate, hit from article	
+	</select>
+	<insert id="insert" parameterType="Article">
+		INSERT INTO article (articleno, boardcd, title, content, email, hit, regdate)
+		VALUES
+		(seq_article.nextval, #{boardCd}, #{title}, #{content}, #{email}, 0, sysdate)
+	</insert>
+
+	<update id="update" parameterType="Article">
+		UPDATE article 
+		SET title=#{title},content=#{content} 
+		WHERE articleno=#{articleNo}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM article WHERE articleno = #{articleNo}
+	</delete>	
+			
+</mapper>

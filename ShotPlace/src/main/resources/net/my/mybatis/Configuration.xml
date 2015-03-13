@@ -7,10 +7,13 @@
 		
 	<typeAliases>
 		<typeAlias type="net.my.user.User" alias="User" />
+		<typeAlias type="net.my.board.Board" alias="Board" />
+		<typeAlias type="net.my.board.Article" alias="Article"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="net/my/mybatis/UserMapper.xml" />
+		<mapper resource="net/my/mybatis/BoardMapper.xml" />
 	</mappers>
 
 </configuration>
