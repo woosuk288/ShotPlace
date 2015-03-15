@@ -7,7 +7,7 @@
 <mapper namespace="net.my.mybatis.BoardMapper">
 
 	<select id="getArticleList" parameterType="hashmap" resultType="Article">
-		SELECT articleno, title, regdate, hit from article	
+		SELECT articleno, title, regdate, hit FROM article WHERE boardcd = #{boardCd}
 	</select>
 	<insert id="insert" parameterType="Article">
 		INSERT INTO article (articleno, boardcd, title, content, email, hit, regdate)
@@ -23,6 +23,10 @@
 	
 	<delete id="delete" parameterType="int">
 		DELETE FROM article WHERE articleno = #{articleNo}
-	</delete>	
+	</delete>
+	
+	<select id="getBoardNm" parameterType="string" resultType="string">
+		SELECT boardNm FROM board WHERE boardcd = #{boardCd}
+	</select>	
 			
 </mapper>

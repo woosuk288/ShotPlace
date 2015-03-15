@@ -10,7 +10,7 @@ public interface BoardService {
 	public ArrayList<Article> getArticleList(String boardCd);
 
 	/*
-	 * 새로운 게시글  추가
+	 * 새로운 게시글 추가
 	 */
 	public int insert(Article article);
 
@@ -24,4 +24,9 @@ public interface BoardService {
 	 * 게시글 삭제
 	 */
 	public void delete(int articleNo);
+
+	/*
+	 * 게시판 이름(종류)
+	 */
+	public String getBoardNm(String boardCd);
 }

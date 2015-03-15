@@ -24,8 +24,30 @@ public class BbsController {
 		if (boardCd == null) boardCd = "free";
 		
 		ArrayList<Article> list = boardService.getArticleList(boardCd);
+		String boardNm = boardService.getBoardNm(boardCd);
+		
 		model.addAttribute("list", list);
+		model.addAttribute("boardNm", boardNm);
+		model.addAttribute("boardCd", boardCd);
+		
 		
 		return "bbs/list";	
+	}
+	
+	@RequestMapping(value="/write", method=RequestMethod.GET)
+	public String write(String boardCd, Model model) throws Exception {
+		
+		//게시판 이름
+		String boardNm = boardService.getBoardNm(boardCd);
+		model.addAttribute("boardNm", boardNm);
+		
+		return "bbs/writeform";
+	}
+	
+	@RequestMapping(value="/write", method=RequestMethod.POST)
+	public String write(Article article) {
+		article.setEmail("비회원"); //임시
+		boardService.insert(article);
+		return "redirect:/bbs/list?boardCd=" + article.getBoardCd();
 	}
 }

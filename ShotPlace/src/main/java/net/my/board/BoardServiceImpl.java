@@ -45,4 +45,11 @@ public class BoardServiceImpl implements BoardService{
 		boardMapper.delete(articleNo);
 	}
 	
+	/*
+	 * 게시판 이름(종류)
+	 */
+	public String getBoardNm(String boardCd){
+		return boardMapper.getBoardNm(boardCd);
+	}
+	
 }

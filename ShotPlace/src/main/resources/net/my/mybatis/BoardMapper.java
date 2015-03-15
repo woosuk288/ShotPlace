@@ -23,4 +23,9 @@ public interface BoardMapper {
 	 * 게시글 삭제
 	 */
 	public void delete(int articleNo);
+	
+	/*
+	 * 게시판 이름(종류)
+	 */
+	public String getBoardNm(String boardCd);
 }

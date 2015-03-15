@@ -8,6 +8,15 @@
 <meta name="Description" content="게시판 목록" />
 <link rel="stylesheet" href="../resources/css/screen.css" type="text/css" media="screen" />
 <title>${boardNm }</title>
+<script type="text/javascript">
+//<![CDATA[
+
+	function goWrite() {
+		var form = document.getElementById("writeForm");
+		form.submit();
+	}
+//]]>
+</script>  
 </head>
 <body>
 
@@ -69,6 +78,15 @@
 		<%@ include file="../inc/footer.jsp" %>
 	</div>
 
+</div>
+
+<div id="form-group" style="display: none;">
+
+	<form id="writeForm" action="./write" method="get">
+	<p>
+		<input type="hidden" name="boardCd" value="${boardCd }" />
+	</p>
+	</form>
 </div>
 
 </body>
