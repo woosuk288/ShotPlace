@@ -39,4 +39,14 @@ public interface BoardService {
 	 * 게시판 객체 가져오기
 	 */
 	public Article getArticle(int articleNo);
+
+	/*
+	 * 이전글 보기
+	 */
+	public Article getPrevArticle(int articleNo, String boardCd);
+
+	/*
+	 * 다음글 보기
+	 */
+	public Article getNextArticle(int articleNo, String boardCd);
 }

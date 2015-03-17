@@ -65,4 +65,30 @@ public class BoardServiceImpl implements BoardService{
 	public Article getArticle(int articleNo){
 		return boardMapper.getArticle(articleNo);
 	}
+	
+	/*
+	 * 이전글 보기
+	 */
+	public Article getPrevArticle(int articleNo, String boardCd) {
+		HashMap<String, String> hashmap = new HashMap<String, String>();
+		Integer no = articleNo;
+		hashmap.put("articleNo", no.toString());
+		hashmap.put("boardCd", boardCd);
+		
+		return boardMapper.getPrevArticle(hashmap);
+	}
+
+	/*
+	 * 다음글 보기
+	 */
+	public Article getNextArticle(int articleNo, String boardCd) {
+		HashMap<String, String> hashmap = new HashMap<String, String>();
+		Integer no = articleNo;
+		hashmap.put("articleNo", no.toString());
+		hashmap.put("boardCd", boardCd);
+		
+		return boardMapper.getNextArticle(hashmap);
+	}
+	
+	
 }

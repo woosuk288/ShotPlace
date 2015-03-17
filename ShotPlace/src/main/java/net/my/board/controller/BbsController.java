@@ -58,15 +58,21 @@ public class BbsController {
 		
 		//상세보기
 		Article thisArticle = boardService.getArticle(articleNo);
+		Article prevArticle = boardService.getPrevArticle(articleNo, boardCd);
+		Article nextArticle = boardService.getNextArticle(articleNo, boardCd);
 
 		ArrayList<Article> list = boardService.getArticleList(boardCd);
 		String boardNm = boardService.getBoardNm(boardCd);
 
 		model.addAttribute("thisArticle", thisArticle);
+		model.addAttribute("prevArticle", prevArticle);
+		model.addAttribute("nextArticle", nextArticle);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("boardNm", boardNm);
 		model.addAttribute("boardCd", boardCd);
+
+		
 		
 		return "bbs/view";
 	}

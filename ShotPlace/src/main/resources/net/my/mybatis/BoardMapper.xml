@@ -43,4 +43,24 @@
 		WHERE articleno = #{articleNo}
 	</select>
 			
+	<select id="getNextArticle" parameterType="hashmap" resultType="Article">
+		SELECT articleno, title
+		FROM
+		(SELECT rownum r,a.*
+		FROM
+		(SELECT articleno, title FROM article WHERE boardCd = #{boardCd} AND articleno &gt; #{articleNo}
+		ORDER BY articleno) a)
+		WHERE r = 1
+	</select>
+	
+	<select id="getPrevArticle" parameterType="hashmap" resultType="Article">
+		SELECT articleno, title
+		FROM
+		(SELECT rownum r,a.*
+		FROM
+		(SELECT articleno, title FROM article WHERE boardCd = #{boardCd} AND articleno &lt; #{articleNo}
+		ORDER BY articleno DESC) a)
+		WHERE r = 1
+	</select>	
+			
 </mapper>

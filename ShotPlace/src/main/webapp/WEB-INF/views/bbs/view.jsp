@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -57,6 +58,15 @@
 		<h6>작성자 ${thisArticle.email }, 조회수 ${thisArticle.hit }</h6>
 		<p>${thisArticle.htmlContent }</p>
 
+	</div>
+	
+	<div id="next-prev">
+		<c:if test="${nextArticle != null }">
+			<p>다음글 : <a href="javascript:goView('${nextArticle.articleNo }')">${nextArticle.title }</a></p>
+		</c:if>
+		<c:if test="${prevArticle != null }">
+			<p>이전글 : <a href="javascript:goView('${prevArticle.articleNo }')">${prevArticle.title }</a></p>
+		</c:if>
 	</div>
 	
 	<div id="view-menu">

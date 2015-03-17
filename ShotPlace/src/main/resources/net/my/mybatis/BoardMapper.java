@@ -38,4 +38,14 @@ public interface BoardMapper {
 	 * 게시판 객체 가져오기
 	 */
 	public Article getArticle(int articleNo);
+	
+	/*
+	 * 이전글 보기
+	 */
+	public Article getPrevArticle(HashMap<String, String> hashmap);
+
+	/*
+	 * 다음글 보기
+	 */
+	public Article getNextArticle(HashMap<String, String> hashmap);
 }
