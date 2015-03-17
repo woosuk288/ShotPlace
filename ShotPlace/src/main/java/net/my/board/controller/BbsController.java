@@ -50,4 +50,24 @@ public class BbsController {
 		boardService.insert(article);
 		return "redirect:/bbs/list?boardCd=" + article.getBoardCd();
 	}
+	
+	@RequestMapping(value="view", method=RequestMethod.GET)
+	public String view(int articleNo, String boardCd, Model model){
+		
+		boardService.increaseHit(articleNo);
+		
+		//상세보기
+		Article thisArticle = boardService.getArticle(articleNo);
+
+		ArrayList<Article> list = boardService.getArticleList(boardCd);
+		String boardNm = boardService.getBoardNm(boardCd);
+
+		model.addAttribute("thisArticle", thisArticle);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("boardNm", boardNm);
+		model.addAttribute("boardCd", boardCd);
+		
+		return "bbs/view";
+	}
 }

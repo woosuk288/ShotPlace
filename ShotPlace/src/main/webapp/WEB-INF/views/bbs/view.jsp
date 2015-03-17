@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="Keywords" content="게시판 목록" />
-<meta name="Description" content="게시판 목록" />
+<meta name="Keywords" content="게시판 상세보기" />
+<meta name="Description" content="게시판 상세보기" />
 <link rel="stylesheet" href="../resources/css/screen.css" type="text/css" media="screen" />
 <title>${boardNm }</title>
 <script type="text/javascript">
@@ -44,6 +44,32 @@
 <!-- 본문 시작 -->			
 <h1>${boardNm }</h1>
 <div id="bbs">
+	<table>
+	<tr>
+		<th style="width: 50px;">TITLE</th>
+		<th style="text-align: left;color: #555;">${thisArticle.title }</th>
+		<th style="width: 50px;">DATE</th>
+		<th style="width: 130px;color: #555;">${thisArticle.writeDateTime }</th>
+	</tr>	
+	</table>
+	
+	<div id="gul-content">
+		<h6>작성자 ${thisArticle.email }, 조회수 ${thisArticle.hit }</h6>
+		<p>${thisArticle.htmlContent }</p>
+
+	</div>
+	
+	<div id="view-menu">
+		<div class="fl">
+			<input type="button" value="수정" onclick="goModify();" />
+			<input type="button" value="삭제" onclick="goDelete()" />
+		</div>
+		<div class="fr">			
+			<input type="button" value="목록" onclick="goList()" />
+			<input type="button" value="새글쓰기" onclick="goWrite()" />
+		</div>		
+	</div>
+		
 	<table>
 	<tr>
 		<th style="width: 60px;">NO</th>

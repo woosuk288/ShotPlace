@@ -28,5 +28,19 @@
 	<select id="getBoardNm" parameterType="string" resultType="string">
 		SELECT boardNm FROM board WHERE boardcd = #{boardCd}
 	</select>	
+	
+	<update id="increaseHit" parameterType="int">
+		UPDATE article SET hit = hit + 1 WHERE articleno = #{articleNo}
+	</update>
+	
+	<resultMap type="Article" id="ArticleClob">
+		<result property="content"  column="content"  jdbcType="CLOB" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<select id="getArticle" parameterType="int" resultMap="ArticleClob">
+		SELECT articleno, title, content, email, hit, regdate
+		FROM article
+		WHERE articleno = #{articleNo}
+	</select>
 			
 </mapper>

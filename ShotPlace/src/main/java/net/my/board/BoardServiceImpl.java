@@ -52,4 +52,17 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.getBoardNm(boardCd);
 	}
 	
+	/*
+	 * 게시판 조회수 증가
+	 */
+	public void increaseHit(int articleNo){
+		boardMapper.increaseHit(articleNo);
+	}
+
+	/*
+	 * 게시판 객체 가져오기
+	 */
+	public Article getArticle(int articleNo){
+		return boardMapper.getArticle(articleNo);
+	}
 }
