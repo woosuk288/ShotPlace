@@ -23,6 +23,17 @@
 		form.submit();
 		
 	}
+	function goModify(){
+		var form = document.getElementById("modifyForm");
+		form.submit();
+		
+	}
+	function goDelete(){
+		var form = document.getElementById("deleteForm");
+		form.submit();
+		
+	}
+	
 //]]>
 </script>  
 </head>
@@ -71,7 +82,7 @@
 	
 	<div id="view-menu">
 		<div class="fl">
-			<input type="button" value="수정" onclick="goModify();" />
+			<input type="button" value="수정" onclick="goModify()" />
 			<input type="button" value="삭제" onclick="goDelete()" />
 		</div>
 		<div class="fr">			
@@ -136,6 +147,18 @@
 		<input type="hidden" name="boardCd" value="${boardCd }" />
 	</p>
 	</form>
+	<form id="modifyForm" action="./modify" method="get">
+	<p>
+		<input type="hidden" name="articleNo" value="${thisArticle.articleNo }"/>
+		<input type="hidden" name="boardCd" value="${boardCd }" />
+	</p>
+	</form>
+	<form id="deleteForm" action="./delete" method="post">
+	<p>
+		<input type="hidden" name="articleNo" value="${thisArticle.articleNo }"/> />
+		<input type="hidden" name="boardCd" value="${boardCd }" />
+	</p>
+	</form>	
 </div>
 
 </body>

@@ -45,14 +45,14 @@ public class BbsController {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String write(Article article) {
+	public String write(Article article) throws Exception {
 		article.setEmail("비회원"); //임시
 		boardService.insert(article);
 		return "redirect:/bbs/list?boardCd=" + article.getBoardCd();
 	}
 	
-	@RequestMapping(value="view", method=RequestMethod.GET)
-	public String view(int articleNo, String boardCd, Model model){
+	@RequestMapping(value="/view", method=RequestMethod.GET)
+	public String view(int articleNo, String boardCd, Model model) throws Exception {
 		
 		boardService.increaseHit(articleNo);
 		
@@ -75,5 +75,41 @@ public class BbsController {
 		
 		
 		return "bbs/view";
+	}
+	
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public String delete(int articleNo, 
+			String boardCd) throws Exception {
+		
+		boardService.delete(articleNo);
+		
+		return "redirect:/bbs/list?boardCd=" + boardCd;
+
+	}	
+	
+	@RequestMapping(value="/modify", method=RequestMethod.GET)
+	public String update(int articleNo,
+			String boardCd,
+			Model model) throws Exception {
+		
+		Article thisArticle = boardService.getArticle(articleNo);
+		String boardNm = boardService.getBoardNm(boardCd);
+	     
+	    //수정페이지에서 보일 게시글 정보
+	    model.addAttribute("thisArticle", thisArticle);
+		model.addAttribute("boardNm", boardNm);
+		
+		return "bbs/modifyForm";
+	}
+	
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String update(Article article,
+			String boardCd,
+			Model model) throws Exception {
+		
+		boardService.update(article);
+		
+		return "redirect:/bbs/view?articleNo=" + article.getArticleNo() + 
+				"&boardCd=" + article.getBoardCd();
 	}
 }
