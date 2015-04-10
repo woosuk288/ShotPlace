@@ -53,6 +53,7 @@
 <p style="margin: 0;padding: 0;">
 	<input type="hidden"  name="articleNo" value="${param.articleNo }" />
 	<input type="hidden"  name="boardCd" value="${param.boardCd }" />
+	<input type="hidden" name="curPage" value="${param.curPage }" />
 </p>
 <table id="write-form">
 <tr>
@@ -96,12 +97,14 @@
 	<form id="listForm" action="list" method="get">
 		<p>
 		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+		<input type="hidden" name="curPage" value="${param.curPage }" />
 		</p>
 	</form>
 	<form id="viewForm" action="view" method="get">
 		<p>
 		<input type="hidden" name="articleNo" value="${param.articleNo }"/>
 		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+		<input type="hidden" name="curPage" value="${param.curPage }" />
 		</p>
 	</form>
 </div>

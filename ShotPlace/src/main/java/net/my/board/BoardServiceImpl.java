@@ -2,6 +2,7 @@ package net.my.board;
 
 import java.util.*;
 
+import net.my.commons.PagingHelper;
 import net.my.mybatis.BoardMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +14,31 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	private PagingHelper pagingHelper; //페이징 처리 유틸리티 클래스
+	
 	/*
 	 * 게시판 목록
 	 */
-	public ArrayList<Article> getArticleList(String boardCd) {
-
+	public ArrayList<Article> getArticleList(String boardCd, int start, int end) {
+		Integer startRownum = start;
+		Integer endRownum = end;
+		
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		hashmap.put("boardCd", boardCd);
-	
+		hashmap.put("start", startRownum.toString());
+		hashmap.put("end", endRownum.toString());
+		
 		return boardMapper.getArticleList(hashmap);
+	}
+	
+	/*
+	 * 특정 게시판의 총 게시물 갯수 구하기
+	 */
+	public int getTotalRecord(String boardCd) {
+		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("boardCd", boardCd);
+
+		return boardMapper.getTotalRecord(hashmap);
 	}
 	
 	/*
@@ -90,5 +107,38 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.getNextArticle(hashmap);
 	}
 	
+	/*
+	 * paging
+	 */
+	public int getListNo() {
+		return pagingHelper.getListNo(); 
+	}
 	
+	public int getPrevLink() {
+		return pagingHelper.getPrevLink();
+	}
+	
+	public int getFirstPage() {
+		return pagingHelper.getFirstPage();
+	}
+	
+	public int getLastPage() {
+		return pagingHelper.getLastPage();
+	}
+	
+	public int getNextLink() {
+		return pagingHelper.getNextLink();
+	}
+
+	public int[] getPageLinks() {
+		return pagingHelper.getPageLinks();
+	}
+
+	public PagingHelper getPagingHelper() {
+		return pagingHelper;
+	}
+
+	public void setPagingHelper(PagingHelper pagingHelper) {
+		this.pagingHelper = pagingHelper;
+	}
 }

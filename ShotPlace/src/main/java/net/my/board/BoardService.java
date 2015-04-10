@@ -2,18 +2,24 @@ package net.my.board;
 
 import java.util.ArrayList;
 
+import net.my.commons.PagingHelper;
+
 public interface BoardService {
 
 	/*
 	 * 게시판 목록
 	 */
-	public ArrayList<Article> getArticleList(String boardCd);
-
+	public ArrayList<Article> getArticleList(String boardCd, int start, int end);
+	
+	/*
+	 * 특정 게시판의 총 게시물 갯수 구하기
+	 */
+	public int getTotalRecord(String boardCd);
+	
 	/*
 	 * 새로운 게시글 추가
 	 */
 	public int insert(Article article);
-
 	
 	/*
 	 * 게시글 수정
@@ -49,4 +55,22 @@ public interface BoardService {
 	 * 다음글 보기
 	 */
 	public Article getNextArticle(int articleNo, String boardCd);
+	
+	/*
+	 * paging
+	 */
+	public int getListNo();
+	
+	public int getPrevLink();
+	
+	public int getFirstPage();
+	
+	public int getLastPage();
+	
+	public int getNextLink();
+
+	public int[] getPageLinks();
+
+	public void setPagingHelper(PagingHelper pagingHelper);
+
 }

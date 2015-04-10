@@ -7,8 +7,23 @@
 <mapper namespace="net.my.mybatis.BoardMapper">
 
 	<select id="getArticleList" parameterType="hashmap" resultType="Article">
-		SELECT articleno, title, regdate, hit FROM article WHERE boardcd = #{boardCd}
+		SELECT articleno, title, regdate, hit 
+		FROM (
+			SELECT rownum r, a.* 
+				FROM (
+					SELECT articleno, title, regdate, hit 
+					FROM article 
+					WHERE boardcd = #{boardCd}	
+					ORDER BY articleno DESC
+				) a
+		)
+		WHERE r BETWEEN #{start} AND #{end}
 	</select>
+	
+	<select id="getTotalRecord" parameterType="hashmap" resultType="int">
+		SELECT count(*) FROM article WHERE boardcd = #{boardCd}
+	</select>	
+	
 	<insert id="insert" parameterType="Article">
 		INSERT INTO article (articleno, boardcd, title, content, email, hit, regdate)
 		VALUES

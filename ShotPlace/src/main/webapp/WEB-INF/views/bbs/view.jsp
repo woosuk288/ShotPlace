@@ -11,6 +11,12 @@
 <title>${boardNm }</title>
 <script type="text/javascript">
 //<![CDATA[
+           
+ 	function goList(page) {
+		var form = document.getElementById("listForm");
+		form.curPage.value = page;
+		form.submit();
+	}          
 
 	function goWrite() {
 		var form = document.getElementById("writeForm");
@@ -86,7 +92,7 @@
 			<input type="button" value="삭제" onclick="goDelete()" />
 		</div>
 		<div class="fr">			
-			<input type="button" value="목록" onclick="goList()" />
+			<input type="button" value="목록" onclick="goList('${param.curPage }')" />
 			<input type="button" value="새글쓰기" onclick="goWrite()" />
 		</div>		
 	</div>
@@ -101,7 +107,16 @@
 	<!--  반복 구간 시작 -->
 	<c:forEach var="article" items="${list }" varStatus="status">	
 	<tr>
-		<td style="text-align: center;">${article.articleNo }</td>
+		<td style="text-align: center;">
+			<c:choose>
+				<c:when test="${param.articleNo == article.articleNo }">
+					<img src="../resources/images/arrow.gif" alt="현재글" />
+				</c:when>
+				<c:otherwise>
+					${no - status.index }
+				</c:otherwise>
+			</c:choose>
+		</td>
 		<td>
 			<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
 		</td>
@@ -111,6 +126,31 @@
 	</c:forEach>
 	<!--  반복 구간 끝 -->
 	</table>
+
+	<!--paging-->
+	<div id="paging" style="text-align: center;">
+		
+		<c:if test="${prevLink > 0 }">
+			<a href="javascript:goList('${prevPage }')">[이전]</a>
+		</c:if>
+
+		<c:forEach var="i" items="${pageLinks }" varStatus="stat">
+			<c:choose>
+			<c:when test="${param.curPage == i}">
+				<span class="bbs-strong">${i }</span>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:goList('${i }')">${i }</a>
+			</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		
+		<c:if test="${nextLink > 0 }">
+			<a href="javascript:goList('${nextPage }')">[다음]</a>
+		</c:if>
+		
+	</div>	
+	
 	<div id="list-menu" style="text-align:  right;">
 		<input type="button" value="새글쓰기" onclick="goWrite()" />
 	</div>
@@ -135,28 +175,40 @@
 </div>
 
 <div id="form-group" style="display: none;">
-
+	<form id="listForm" action="./list" method="get">
+		<p>
+			<input type="hidden" name="boardCd" value="${param.boardCd }" />
+			<input type="hidden" name="curPage" />
+		</p>
+	</form>
+	
 	<form id="writeForm" action="./write" method="get">
 	<p>
-		<input type="hidden" name="boardCd" value="${boardCd }" />
+		<input type="hidden" name="boardCd" value="${param.boardCd }" />
 	</p>
 	</form>
+	
 	<form id="viewForm" action="./view" method="get">
 	<p>
 		<input type="hidden" name="articleNo" />
-		<input type="hidden" name="boardCd" value="${boardCd }" />
+		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+		<input type="hidden" name="curPage" value="${param.curPage }" />
 	</p>
 	</form>
+	
 	<form id="modifyForm" action="./modify" method="get">
 	<p>
-		<input type="hidden" name="articleNo" value="${thisArticle.articleNo }"/>
-		<input type="hidden" name="boardCd" value="${boardCd }" />
+		<input type="hidden" name="articleNo" value="${param.articleNo }"/>
+		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+		<input type="hidden" name="curPage" value="${param.curPage }" />
 	</p>
 	</form>
+	
 	<form id="deleteForm" action="./delete" method="post">
 	<p>
-		<input type="hidden" name="articleNo" value="${thisArticle.articleNo }"/> />
-		<input type="hidden" name="boardCd" value="${boardCd }" />
+		<input type="hidden" name="articleNo" value="${param.articleNo }"/> />
+		<input type="hidden" name="boardCd" value="${param.boardCd }" />
+		<input type="hidden" name="curPage" value="${param.curPage }" />
 	</p>
 	</form>	
 </div>
