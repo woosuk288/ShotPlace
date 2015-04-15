@@ -144,7 +144,7 @@ public class BbsController {
 		
 		boardService.delete(articleNo);
 		
-		return "redirect:/bbs/list?boardCd=" + 
+		return "redirect:/bbs/list?boardCd=" + boardCd + 
 		"&curPage=" + curPage + 
 		"&searchWord=" + searchWord;
 	}	
