@@ -19,12 +19,13 @@ public class BoardServiceImpl implements BoardService{
 	/*
 	 * 게시판 목록
 	 */
-	public ArrayList<Article> getArticleList(String boardCd, int start, int end) {
+	public ArrayList<Article> getArticleList(String boardCd, String searchWord, int start, int end) {
 		Integer startRownum = start;
 		Integer endRownum = end;
 		
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		hashmap.put("boardCd", boardCd);
+		hashmap.put("searchWord", searchWord);
 		hashmap.put("start", startRownum.toString());
 		hashmap.put("end", endRownum.toString());
 		
@@ -34,9 +35,10 @@ public class BoardServiceImpl implements BoardService{
 	/*
 	 * 특정 게시판의 총 게시물 갯수 구하기
 	 */
-	public int getTotalRecord(String boardCd) {
+	public int getTotalRecord(String boardCd, String searchWord) {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
 		hashmap.put("boardCd", boardCd);
+		hashmap.put("searchWord", searchWord);
 
 		return boardMapper.getTotalRecord(hashmap);
 	}
@@ -86,11 +88,12 @@ public class BoardServiceImpl implements BoardService{
 	/*
 	 * 이전글 보기
 	 */
-	public Article getPrevArticle(int articleNo, String boardCd) {
+	public Article getPrevArticle(int articleNo, String boardCd, String searchWord) {
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		Integer no = articleNo;
 		hashmap.put("articleNo", no.toString());
 		hashmap.put("boardCd", boardCd);
+		hashmap.put("searchWord", searchWord);
 		
 		return boardMapper.getPrevArticle(hashmap);
 	}
@@ -98,11 +101,12 @@ public class BoardServiceImpl implements BoardService{
 	/*
 	 * 다음글 보기
 	 */
-	public Article getNextArticle(int articleNo, String boardCd) {
+	public Article getNextArticle(int articleNo, String boardCd, String searchWord) {
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		Integer no = articleNo;
 		hashmap.put("articleNo", no.toString());
 		hashmap.put("boardCd", boardCd);
+		hashmap.put("searchWord", searchWord);
 		
 		return boardMapper.getNextArticle(hashmap);
 	}

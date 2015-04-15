@@ -9,12 +9,12 @@ public interface BoardService {
 	/*
 	 * 게시판 목록
 	 */
-	public ArrayList<Article> getArticleList(String boardCd, int start, int end);
+	public ArrayList<Article> getArticleList(String boardCd, String searchWord, int start, int end);
 	
 	/*
 	 * 특정 게시판의 총 게시물 갯수 구하기
 	 */
-	public int getTotalRecord(String boardCd);
+	public int getTotalRecord(String boardCd, String searchWord);
 	
 	/*
 	 * 새로운 게시글 추가
@@ -49,12 +49,12 @@ public interface BoardService {
 	/*
 	 * 이전글 보기
 	 */
-	public Article getPrevArticle(int articleNo, String boardCd);
+	public Article getPrevArticle(int articleNo, String boardCd, String searchWord);
 
 	/*
 	 * 다음글 보기
 	 */
-	public Article getNextArticle(int articleNo, String boardCd);
+	public Article getNextArticle(int articleNo, String boardCd, String searchWord);
 	
 	/*
 	 * paging

@@ -21,16 +21,18 @@ public class BbsController {
 	
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
 	public String list(String boardCd,
-			Integer curPage, 
+			Integer curPage,
+			String searchWord,
 			Model model) throws Exception{
 				
 		if (boardCd == null) boardCd = "free";
 		if (curPage == null) curPage = 1;
+		if (searchWord == null) searchWord = "";
 		
 		int numPerPage = 10;// 페이지당 레코드 수 지정
 		int pagePerBlock = 10;// 페이지 링크의 그룹(block)의 크기 지정
 		
-		int totalRecord = boardService.getTotalRecord(boardCd);
+		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
 		
 		PagingHelper pagingHelper = new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);		
 		boardService.setPagingHelper(pagingHelper);
@@ -38,7 +40,7 @@ public class BbsController {
 		int start = pagingHelper.getStartRecord();
 		int end = pagingHelper.getEndRecord();
 
-		ArrayList<Article> list = boardService.getArticleList(boardCd, start, end);
+		ArrayList<Article> list = boardService.getArticleList(boardCd, searchWord, start, end);
 		String boardNm = boardService.getBoardNm(boardCd);
 		Integer no = boardService.getListNo();
 		Integer prevLink = boardService.getPrevLink();
@@ -84,12 +86,15 @@ public class BbsController {
 	public String view(int articleNo,
 			String boardCd,
 			Integer curPage,
+			String searchWord,
 			Model model) throws Exception {
 		
 		int numPerPage = 10;// 페이지당 레코드 수 지정
 		int pagePerBlock = 10;// 페이지 링크의 그룹(block)의 크기 지정
+		if (searchWord == null) searchWord = ""; // 검색어가 null 이면 ""으로 변경	
+
 		//목록보기
-		int totalRecord = boardService.getTotalRecord(boardCd);
+		int totalRecord = boardService.getTotalRecord(boardCd, searchWord);
 		System.out.println(curPage);
 		PagingHelper pagingHelper = new PagingHelper(totalRecord, curPage, numPerPage, pagePerBlock);		
 		boardService.setPagingHelper(pagingHelper);
@@ -97,7 +102,7 @@ public class BbsController {
 		int start = pagingHelper.getStartRecord();
 		int end = pagingHelper.getEndRecord();
 
-		ArrayList<Article> list = boardService.getArticleList(boardCd, start, end);
+		ArrayList<Article> list = boardService.getArticleList(boardCd, searchWord, start, end);
 		String boardNm = boardService.getBoardNm(boardCd);
 		Integer no = boardService.getListNo();
 		Integer prevLink = boardService.getPrevLink();
@@ -121,8 +126,8 @@ public class BbsController {
 		
 		//상세보기
 		Article thisArticle = boardService.getArticle(articleNo);
-		Article prevArticle = boardService.getPrevArticle(articleNo, boardCd);
-		Article nextArticle = boardService.getNextArticle(articleNo, boardCd);
+		Article prevArticle = boardService.getPrevArticle(articleNo, boardCd, searchWord);
+		Article nextArticle = boardService.getNextArticle(articleNo, boardCd, searchWord);
 
 		model.addAttribute("thisArticle", thisArticle);
 		model.addAttribute("prevArticle", prevArticle);
@@ -133,12 +138,15 @@ public class BbsController {
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String delete(int articleNo, 
-			String boardCd) throws Exception {
+			String boardCd,
+			Integer curPage, 
+			String searchWord) throws Exception {
 		
 		boardService.delete(articleNo);
 		
-		return "redirect:/bbs/list?boardCd=" + boardCd;
-
+		return "redirect:/bbs/list?boardCd=" + 
+		"&curPage=" + curPage + 
+		"&searchWord=" + searchWord;
 	}	
 	
 	@RequestMapping(value="/modify", method=RequestMethod.GET)
@@ -160,12 +168,14 @@ public class BbsController {
 	public String update(Article article,
 			Integer curPage,
 			String boardCd,
+			String searchWord,
 			Model model) throws Exception {
 
 		boardService.update(article);
 		
 		return "redirect:/bbs/view?articleNo=" + article.getArticleNo() + 
 				"&boardCd=" + article.getBoardCd() + 
-				"&curPage=" + curPage;
+				"&curPage=" + curPage +
+				"&searchWord=" + searchWord;
 	}
 }
