@@ -54,6 +54,7 @@
 	<input type="hidden"  name="articleNo" value="${param.articleNo }" />
 	<input type="hidden"  name="boardCd" value="${param.boardCd }" />
 	<input type="hidden" name="curPage" value="${param.curPage }" />
+	<input type="hidden" name="searchWord" value="${param.searchWord }" />
 </p>
 <table id="write-form">
 <tr>
