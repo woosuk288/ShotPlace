@@ -13,7 +13,11 @@
 				FROM (
 					SELECT articleno, title, regdate, hit 
 					FROM article 
-					WHERE boardcd = #{boardCd}	
+					WHERE boardcd = #{boardCd} 
+					<if test="searchWord != null">
+					AND (title LIKE '%${searchWord}%' OR
+					content LIKE '%${searchWord}%')
+					</if>	
 					ORDER BY articleno DESC
 				) a
 		)
@@ -22,6 +26,10 @@
 	
 	<select id="getTotalRecord" parameterType="hashmap" resultType="int">
 		SELECT count(*) FROM article WHERE boardcd = #{boardCd}
+					<if test="searchWord != null">
+					AND (title LIKE '%${searchWord}%' OR
+					content LIKE '%${searchWord}%')
+					</if>
 	</select>	
 	
 	<insert id="insert" parameterType="Article">
