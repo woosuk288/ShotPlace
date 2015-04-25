@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.my.board.Article;
+import net.my.board.AttachFile;
 
 public interface BoardMapper {
 	/*
@@ -54,4 +55,21 @@ public interface BoardMapper {
 	 * 다음글 보기
 	 */
 	public Article getNextArticle(HashMap<String, String> hashmap);
+
+	/*
+	 * 가장 최근 게시물 가져오기
+	 */
+	public Article getNewArticle();
+	
+	/*
+	 * 첨부파일 추가
+	 */
+	public void insertAttachFile(AttachFile attachFile);
+
+	/*
+	 *  게시글의 첨부파일 리스트
+	 */
+	public ArrayList<AttachFile> getAttachFileList(int articleNo);
+
+	
 }

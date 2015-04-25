@@ -1,16 +1,22 @@
 package net.my.board.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.my.board.Article;
+import net.my.board.AttachFile;
 import net.my.board.BoardService;
 import net.my.commons.PagingHelper;
+import net.my.commons.WebContants;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 @RequestMapping("/bbs")
@@ -76,9 +82,33 @@ public class BbsController {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String write(Article article) throws Exception {
+	public String write(Article article,
+			MultipartHttpServletRequest mpRequest) throws Exception {
+		
 		article.setEmail("비회원"); //임시
 		boardService.insert(article);
+		article.setArticleNo(boardService.getNewArticle().getArticleNo());
+		
+		//파일업로드
+		List<MultipartFile> fileList = mpRequest.getFiles("upload");
+		for(MultipartFile mf : fileList){
+			String filename = mf.getOriginalFilename();
+			mf.transferTo(new File(WebContants.BASE_PATH + filename));
+		}
+		
+		//파일데이터 삽입
+		int size = fileList.size();
+		for (int i = 0; i < size; i++) {
+			MultipartFile mpFile = fileList.get(i);
+			AttachFile attachFile = new AttachFile();
+			String filename = mpFile.getOriginalFilename();
+			attachFile.setFilename(filename);
+			attachFile.setFiletype(mpFile.getContentType());
+			attachFile.setFilesize(mpFile.getSize());
+			attachFile.setArticleNo(article.getArticleNo());
+			boardService.insertAttachFile(attachFile);
+		}					
+		
 		return "redirect:/bbs/list?boardCd=" + article.getBoardCd();
 	}
 	
@@ -128,10 +158,12 @@ public class BbsController {
 		Article thisArticle = boardService.getArticle(articleNo);
 		Article prevArticle = boardService.getPrevArticle(articleNo, boardCd, searchWord);
 		Article nextArticle = boardService.getNextArticle(articleNo, boardCd, searchWord);
+		ArrayList<AttachFile> attachFileList = boardService.getAttachFileList(articleNo);
 
 		model.addAttribute("thisArticle", thisArticle);
 		model.addAttribute("prevArticle", prevArticle);
 		model.addAttribute("nextArticle", nextArticle);
+		model.addAttribute("attachFileList", attachFileList);
 		
 		return "bbs/view";
 	}
@@ -169,9 +201,30 @@ public class BbsController {
 			Integer curPage,
 			String boardCd,
 			String searchWord,
-			Model model) throws Exception {
+			Model model,
+			MultipartHttpServletRequest mpRequest) throws Exception {
 
 		boardService.update(article);
+		
+		//파일업로드
+		List<MultipartFile> fileList = mpRequest.getFiles("upload");
+		for(MultipartFile mf : fileList){
+			String filename = mf.getOriginalFilename();
+			mf.transferTo(new File(WebContants.BASE_PATH + filename));
+		}
+		
+		//파일데이터 삽입
+		int size = fileList.size();
+		for (int i = 0; i < size; i++) {
+			MultipartFile mpFile = fileList.get(i);
+			AttachFile attachFile = new AttachFile();
+			String filename = mpFile.getOriginalFilename();
+			attachFile.setFilename(filename);
+			attachFile.setFiletype(mpFile.getContentType());
+			attachFile.setFilesize(mpFile.getSize());
+			attachFile.setArticleNo(article.getArticleNo());
+			boardService.insertAttachFile(attachFile);
+		}		
 		
 		return "redirect:/bbs/view?articleNo=" + article.getArticleNo() + 
 				"&boardCd=" + article.getBoardCd() + 

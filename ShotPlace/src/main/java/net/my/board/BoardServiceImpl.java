@@ -112,6 +112,27 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	/*
+	 * 가장 최근 게시물 가져오기
+	 */
+	public Article getNewArticle() {
+		return boardMapper.getNewArticle();		
+	}
+	
+	/*
+	 * 첨부파일 추가
+	 */
+	public void insertAttachFile(AttachFile attachFile) {
+		boardMapper.insertAttachFile(attachFile);
+	}
+	
+	/*
+	 *  게시글의 첨부파일 리스트
+	 */
+	public ArrayList<AttachFile> getAttachFileList(int articleNo) {
+		return boardMapper.getAttachFileList(articleNo);		
+	}
+	
+	/*
 	 * paging
 	 */
 	public int getListNo() {

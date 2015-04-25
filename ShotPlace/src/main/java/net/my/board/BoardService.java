@@ -57,6 +57,21 @@ public interface BoardService {
 	public Article getNextArticle(int articleNo, String boardCd, String searchWord);
 	
 	/*
+	 * 가장 최근 게시물 가져오기
+	 */
+	public Article getNewArticle();
+
+	/*
+	 * 첨부파일 추가
+	 */
+	public void insertAttachFile(AttachFile attachFile);
+	
+	/*
+	 *  게시글의 첨부파일 리스트
+	 */
+	public ArrayList<AttachFile> getAttachFileList(int articleNo);
+
+	/*
 	 * paging
 	 */
 	public int getListNo();

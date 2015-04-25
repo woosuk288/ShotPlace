@@ -45,7 +45,7 @@
 <h1>${boardNm }</h1>
 <div id="bbs">
 <h2>글쓰기</h2>
-<form id="writeForm" action="write" method="post" onsubmit="return check()">
+<form id="writeForm" action="write" method="post" enctype="multipart/form-data" onsubmit="return check()">
 <p style="margin: 0;padding: 0;">
 <input type="hidden" name="boardCd" value="${param.boardCd }" />
 </p>
@@ -58,6 +58,10 @@
 	<td colspan="2">
 		<textarea name="content" rows="17"></textarea>
 	</td>
+</tr>
+<tr>
+	<td>파일첨부</td>
+	<td><input type="file" name="upload" multiple/></td>
 </tr>
 </table>
 <div style="text-align: center;padding-bottom: 15px;">

@@ -45,6 +45,21 @@ insert into article values(seq_article.nextval, 'free', 'test1', 'it''s test1', 
 insert into article values(seq_article.nextval, 'free', 'test2', 'it''s \*test2', 'email2', 0, sysdate)
 insert into article values(seq_article.nextval, 'free', 'test2', 'it''s \$test3', 'email3', 0, sysdate)
 
+-- 첨부파일 
+create table attachfile (
+	attachfileno number,
+	filename varchar2(50) NOT NULL,
+	filetype varchar2(30),
+	filesize number,
+	articleno number,
+	constraint PK_ATTACHFILE PRIMARY KEY(attachfileno)
+);
+
+-- 첨부파일 번호 생성기
+create sequence SEQ_ATTACHFILE
+increment by 1
+start with 1;
+
 commit 
 
 select * from board 

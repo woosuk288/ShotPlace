@@ -74,6 +74,13 @@
 	<div id="gul-content">
 		<h6>작성자 ${thisArticle.email }, 조회수 ${thisArticle.hit }</h6>
 		<p>${thisArticle.htmlContent }</p>
+		<p id="file-list" style="text-align: right;">
+			<c:forEach var="file" items="${attachFileList }" varStatus="status">
+			<a href="javascript:download('${file.filename }')">${file.filename }</a>
+			<input type="button" value="x" onclick="deleteAttachFile('${file.attachFileNo }')" />
+			<br />
+			</c:forEach>	
+		</p>	
 
 	</div>
 	
@@ -119,6 +126,9 @@
 		</td>
 		<td>
 			<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
+			<c:if test="${article.attachFileNum > 0 }">
+				<img src="../resources/images/attach.png" alt="첨부파일" />
+			</c:if>
 		</td>
 		<td style="text-align: center;">${article.writeDate }</td>
 		<td style="text-align: center;">${article.hit }</td>

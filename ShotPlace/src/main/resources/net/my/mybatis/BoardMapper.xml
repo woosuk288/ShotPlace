@@ -7,17 +7,23 @@
 <mapper namespace="net.my.mybatis.BoardMapper">
 
 	<select id="getArticleList" parameterType="hashmap" resultType="Article">
-		SELECT articleno, title, regdate, hit 
+		SELECT articleno, title, regdate, hit, attachfilenum 
 		FROM (
 			SELECT rownum r, a.* 
 				FROM (
-					SELECT articleno, title, regdate, hit 
-					FROM article 
-					WHERE boardcd = #{boardCd} 
+					SELECT 
+						a.articleno, title, regdate, hit, 
+						count(distinct(f.attachfileno)) attachfilenum 
+					FROM 
+						article a, attachfile f 
+					WHERE 
+						a.articleno = f.articleno(+) AND 
+						boardcd = #{boardCd} 
 					<if test="searchWord != null">
 					AND (title LIKE '%${searchWord}%' OR
 					content LIKE '%${searchWord}%')
-					</if>	
+					</if>
+					GROUP BY a.articleno, title, regdate, hit 
 					ORDER BY articleno DESC
 				) a
 		)
@@ -84,6 +90,25 @@
 		(SELECT articleno, title FROM article WHERE boardCd = #{boardCd} AND articleno &lt; #{articleNo}
 		ORDER BY articleno DESC) a)
 		WHERE r = 1
+	</select>
+	
+	<select id="getNewArticle" resultType="Article">
+		SELECT articleno, title, content, email, hit, regdate
+		FROM (SELECT * FROM ARTICLE ORDER BY articleno DESC) 
+		WHERE ROWNUM = 1
 	</select>	
+	
+	<insert id="insertAttachFile" parameterType="AttachFile">
+		INSERT INTO attachfile (attachfileno, filename, filetype, filesize, articleno)
+		VALUES
+		(seq_attachfile.nextval, #{filename}, #{filetype}, #{filesize}, #{articleNo})
+	</insert>	
+
+	<select id="getAttachFileList" parameterType="int" resultType="AttachFile">
+		SELECT attachfileno, filename, filetype, filesize, articleno 
+		FROM attachfile 
+		WHERE articleno = #{articleNo} 
+		ORDER BY attachfileno
+	</select>
 			
 </mapper>

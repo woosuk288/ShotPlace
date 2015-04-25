@@ -11,9 +11,16 @@ public class Article {
 	private String email;
 	private int hit;
 	private Date regdate;
+	private int attachFileNum;
 	
 	public static final String ENTER = System.getProperty("line.separator");
 	
+	public int getAttachFileNum() {
+		return attachFileNum;
+	}
+	public void setAttachFileNum(int attachFileNum) {
+		this.attachFileNum = attachFileNum;
+	}
 	public int getArticleNo() {
 		return articleNo;
 	}
