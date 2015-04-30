@@ -110,5 +110,9 @@
 		WHERE articleno = #{articleNo} 
 		ORDER BY attachfileno
 	</select>
+	
+	<delete id="deleteFile" parameterType="int">
+		DELETE FROM attachfile WHERE attachfileno = #{attachFileNo}
+	</delete>
 			
 </mapper>

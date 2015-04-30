@@ -231,4 +231,28 @@ public class BbsController {
 				"&curPage=" + curPage +
 				"&searchWord=" + searchWord;
 	}
+	
+	@RequestMapping(value="/download", method=RequestMethod.POST)
+	public String download(String filename, Model model){
+		model.addAttribute("filename", filename);
+		return "inc/download";
+	}
+	
+	@RequestMapping(value="/attachFileDel", method=RequestMethod.POST)
+	public String attachFileDel(Integer attachFileNo, 
+			Integer articleNo, 
+			String boardCd, 
+			Integer curPage, 
+			String searchWord) throws Exception {
+		
+		boardService.deleteFile(attachFileNo);
+		
+		//searchWord = URLEncoder.encode(searchWord,"UTF-8");
+		
+		return "redirect:/bbs/view?articleNo=" + articleNo + 
+			"&boardCd=" + boardCd + 
+			"&curPage=" + curPage + 
+			"&searchWord=" + searchWord;
+
+	}
 }

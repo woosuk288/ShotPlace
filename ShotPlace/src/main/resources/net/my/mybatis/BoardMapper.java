@@ -71,5 +71,9 @@ public interface BoardMapper {
 	 */
 	public ArrayList<AttachFile> getAttachFileList(int articleNo);
 
+	/*
+	 * 첨부 파일 삭제 
+	 */
+	public void deleteFile(Integer attachFileNo);
 	
 }

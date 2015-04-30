@@ -133,6 +133,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	/*
+	 * 첨부 파일 삭제 
+	 */
+	public void deleteFile(Integer attachFileNo) {
+		boardMapper.deleteFile(attachFileNo);
+	}
+	
+	/*
 	 * paging
 	 */
 	public int getListNo() {

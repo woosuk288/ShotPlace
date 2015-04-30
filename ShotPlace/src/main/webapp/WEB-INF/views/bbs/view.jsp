@@ -11,6 +11,20 @@
 <title>${boardNm }</title>
 <script type="text/javascript">
 //<![CDATA[
+    function download(filename) {
+    	var form = document.getElementById("downForm")
+    	form.filename.value = filename;
+    	form.submit();
+    }
+    
+	function deleteAttachFile(attachFileNo) {
+		var chk = confirm("정말로 삭제하시겠습니까?");
+		if (chk==true) {
+			var form = document.getElementById("deleteAttachFileForm");
+			form.attachFileNo.value = attachFileNo;
+			form.submit();
+		}
+	}
            
  	function goList(page) {
 		var form = document.getElementById("listForm");
@@ -196,6 +210,11 @@
 </div>
 
 <div id="form-group" style="display: none;">
+	<form id="downForm" action="./download" method="post">
+		<p>
+			<input type="hidden" name="filename">
+		<p>		
+	</form>
 	<form id="listForm" action="./list" method="get">
 		<p>
 			<input type="hidden" name="boardCd" value="${param.boardCd }" />
@@ -235,7 +254,16 @@
 		<input type="hidden" name="curPage" value="${param.curPage }" />
 		<input type="hidden" name="searchWord" value="${param.searchWord }" />
 	</p>
-	</form>	
+	</form>
+	<form id="deleteAttachFileForm" action="attachFileDel" method="post">
+		<p>
+			<input type="hidden" name="attachFileNo" />
+			<input type="hidden" name="articleNo" value="${param.articleNo }" />
+			<input type="hidden" name="boardCd" value="${param.boardCd }" />
+			<input type="hidden" name="curPage" value="${param.curPage }" />
+			<input type="hidden" name="searchWord" value="${param.searchWord }" />
+		</p>
+	</form>			
 </div>
 
 </body>
