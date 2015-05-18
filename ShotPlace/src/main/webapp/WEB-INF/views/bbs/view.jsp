@@ -17,6 +17,33 @@
     	form.submit();
     }
     
+    function deleteComment(commentNo) {
+		var chk = confirm("정말로 삭제하시겠습니까?");
+		if (chk==true) {
+			var form = document.getElementById("deleteCommentForm");
+			form.commentNo.value = commentNo;
+			form.submit();
+		}
+	}
+	
+	function updateComment(no) {
+		var commentno = "comment" + no;
+		var formno = "modifyCommentForm" + no;
+		var pele = document.getElementById(commentno);
+		var formele = document.getElementById(formno);
+		var pdisplay;
+		var formdisplay;
+		if ( pele.style.display ) {
+			pdisplay = '';
+			formdisplay = 'none';
+		} else {
+			pdisplay = 'none';
+			formdisplay = '';
+		}
+		pele.style.display = pdisplay;
+		formele.style.display = formdisplay;
+	}
+    
 	function deleteAttachFile(attachFileNo) {
 		var chk = confirm("정말로 삭제하시겠습니까?");
 		if (chk==true) {
@@ -98,6 +125,54 @@
 
 	</div>
 	
+	<!--  덧글 반복 시작 -->
+	<c:forEach var="comment" items="${commentList }" varStatus="status">	
+	<div class="comments">
+		<h4>${comment.email }</h4>
+		<h5>${comment.regdate }</h5>
+		<h6>
+			<a href="javascript:updateComment('${comment.commentNo }')">수정</a> |
+			<a href="javascript:deleteComment('${comment.commentNo }')">삭제</a>
+		</h6>
+		<p id="comment${comment.commentNo }">${comment.htmlMemo }</p>
+		
+		<div class="modify-comment">
+			<form id="modifyCommentForm${comment.commentNo }" action="commentUpdate" method="post" style="display: none;">
+			<p>
+				<input type="hidden" name="commentNo" value="${comment.commentNo }" />
+				<input type="hidden" name="boardCd" value="${param.boardCd }" />
+				<input type="hidden" name="articleNo" value="${param.articleNo }" />
+				<input type="hidden" name="curPage" value="${param.curPage }" />
+				<input type="hidden" name="searchWord" value="${param.searchWod }" />
+			</p>
+			<div class="fr">
+					<a href="javascript:document.forms.modifyCommentForm${comment.commentNo }.submit()">수정하기</a>
+					| <a href="javascript:updateComment('${comment.commentNo }')">취소</a>
+			</div>
+			<div>
+				<textarea class="modify-comment-ta" name="memo" rows="7" cols="50">${comment.memo }</textarea>
+			</div>
+			</form>
+		</div>
+	</div>
+	</c:forEach>
+	<!--  덧글 반복 끝 -->
+	
+	<form id="addCommentForm" action="commentAdd" method="post">
+		<p style="margin: 0;padding: 0;">
+			<input type="hidden" name="articleNo" value="${param.articleNo }" />
+			<input type="hidden" name="boardCd" value="${param.boardCd }" />
+			<input type="hidden" name="curPage" value="${param.curPage }" />
+			<input type="hidden" name="searchWord" value="${param.searchWord }" />
+		</p>
+		<div id="addComment">
+			<textarea name="memo" rows="7" cols="50"></textarea>
+		</div>
+		<div style="text-align: right;">
+			<input type="submit" value="덧글남기기" />
+		</div>
+	</form>
+	
 	<div id="next-prev">
 		<c:if test="${nextArticle != null }">
 			<p>다음글 : <a href="javascript:goView('${nextArticle.articleNo }')">${nextArticle.title }</a></p>
@@ -142,6 +217,9 @@
 			<a href="javascript:goView('${article.articleNo }')">${article.title }</a>
 			<c:if test="${article.attachFileNum > 0 }">
 				<img src="../resources/images/attach.png" alt="첨부파일" />
+			</c:if>
+			<c:if test="${article.commentNum > 0 }">
+				<span class="bbs-strong">[${article.commentNum }]</span>
 			</c:if>
 		</td>
 		<td style="text-align: center;">${article.writeDate }</td>
@@ -263,7 +341,16 @@
 			<input type="hidden" name="curPage" value="${param.curPage }" />
 			<input type="hidden" name="searchWord" value="${param.searchWord }" />
 		</p>
-	</form>			
+	</form>
+	<form id="deleteCommentForm" action="commentDel" method="post">
+		<p>
+			<input type="hidden" name="commentNo" />
+			<input type="hidden" name="articleNo" value="${param.articleNo }" />
+			<input type="hidden" name="boardCd" value="${param.boardCd }" />
+			<input type="hidden" name="curPage" value="${param.curPage }" />
+			<input type="hidden" name="searchWord" value="${param.searchWord }" />
+		</p>
+	</form>				
 </div>
 
 </body>

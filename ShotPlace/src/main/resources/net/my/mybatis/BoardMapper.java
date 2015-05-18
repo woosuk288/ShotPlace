@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import net.my.board.Article;
 import net.my.board.AttachFile;
+import net.my.board.Comment;
 
 public interface BoardMapper {
 	/*
@@ -76,4 +77,28 @@ public interface BoardMapper {
 	 */
 	public void deleteFile(Integer attachFileNo);
 	
+	/*
+	 * 덧글쓰기
+	 */
+	public void insertComment(Comment comment);	
+	
+	/*
+	 * 덧글수정
+	 */
+	public void updateComment(Comment comment);
+	
+	/*
+	 * 덧글삭제
+	 */
+	public void deleteComment(int commentNo);
+	
+	/*
+	 * 덧글 가져오기
+	 */
+	public Comment getComment(int commentNo);
+	
+	/*
+	 * 게시글의 덧글리스트 구하기
+	 */
+	public ArrayList<Comment> getCommentList(int articleNo);
 }

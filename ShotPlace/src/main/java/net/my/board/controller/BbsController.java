@@ -7,6 +7,7 @@ import java.util.List;
 import net.my.board.Article;
 import net.my.board.AttachFile;
 import net.my.board.BoardService;
+import net.my.board.Comment;
 import net.my.commons.PagingHelper;
 import net.my.commons.WebContants;
 
@@ -159,13 +160,75 @@ public class BbsController {
 		Article prevArticle = boardService.getPrevArticle(articleNo, boardCd, searchWord);
 		Article nextArticle = boardService.getNextArticle(articleNo, boardCd, searchWord);
 		ArrayList<AttachFile> attachFileList = boardService.getAttachFileList(articleNo);
+		ArrayList<Comment> commentList = boardService.getCommentList(articleNo);
 
 		model.addAttribute("thisArticle", thisArticle);
 		model.addAttribute("prevArticle", prevArticle);
 		model.addAttribute("nextArticle", nextArticle);
 		model.addAttribute("attachFileList", attachFileList);
+		model.addAttribute("commentList", commentList);
 		
 		return "bbs/view";
+	}
+	
+	@RequestMapping(value="/commentAdd", method=RequestMethod.POST)
+	public String commentAdd(Integer articleNo, 
+			String boardCd, 
+			Integer curPage, 
+			String searchWord, 
+			String memo) throws Exception {
+			
+		Comment comment = new Comment();
+		comment.setMemo(memo);
+		comment.setEmail("bond007@gmail.org");
+		comment.setArticleNo(articleNo);
+		boardService.insertComment(comment);
+		
+		//searchWord = URLEncoder.encode(searchWord,"UTF-8");
+		
+		return "redirect:/bbs/view?articleNo=" + articleNo + 
+			"&boardCd=" + boardCd + 
+			"&curPage=" + curPage + 
+			"&searchWord=" + searchWord;
+
+	}
+
+	@RequestMapping(value="/commentUpdate", method=RequestMethod.POST)
+	public String commentUpdate(Integer commentNo, 
+			Integer articleNo, 
+			String boardCd, 
+			Integer curPage, 
+			String searchWord, 
+			String memo) throws Exception {
+			
+		Comment comment = boardService.getComment(commentNo);
+		comment.setMemo(memo);
+		boardService.updateComment(comment);
+		//searchWord = URLEncoder.encode(searchWord, "UTF-8");
+		
+		return "redirect:/bbs/view?articleNo=" + articleNo + 
+			"&boardCd=" + boardCd + 
+			"&curPage=" + curPage + 
+			"&searchWord=" + searchWord;
+
+	}
+
+	@RequestMapping(value="/commentDel", method=RequestMethod.POST)
+	public String commentDel(Integer commentNo, 
+			Integer articleNo, 
+			String boardCd, 
+			Integer curPage, 
+			String searchWord) throws Exception {
+			
+		boardService.deleteComment(commentNo);
+		
+		//searchWord = URLEncoder.encode(searchWord,"UTF-8");
+		
+		return "redirect:/bbs/view?articleNo=" + articleNo + 
+			"&boardCd=" + boardCd + 
+			"&curPage=" + curPage + 
+			"&searchWord=" + searchWord;
+
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)

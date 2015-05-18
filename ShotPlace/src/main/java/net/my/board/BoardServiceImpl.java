@@ -140,6 +140,41 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	/*
+	 * 덧글쓰기
+	 */
+	public void insertComment(Comment comment) {
+		boardMapper.insertComment(comment);
+	}
+	
+	/*
+	 * 덧글수정
+	 */
+	public void updateComment(Comment comment) {
+		boardMapper.updateComment(comment);
+	}
+	
+	/*
+	 * 덧글삭제
+	 */
+	public void deleteComment(int commentNo) {
+		boardMapper.deleteComment(commentNo);
+	}
+	
+	/*
+	 * 덧글가져오기
+	 */
+	public Comment getComment(int commentNo) {
+		return boardMapper.getComment(commentNo);
+	}
+	
+	/*
+	 * 게시글의 덧글리스트 구하기
+	 */
+	public ArrayList<Comment> getCommentList(int articleNo) {
+		return boardMapper.getCommentList(articleNo);
+	}
+	
+	/*
 	 * paging
 	 */
 	public int getListNo() {

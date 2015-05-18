@@ -12,6 +12,7 @@ public class Article {
 	private int hit;
 	private Date regdate;
 	private int attachFileNum;
+	private int commentNum;
 	
 	public static final String ENTER = System.getProperty("line.separator");
 	
@@ -68,6 +69,12 @@ public class Article {
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
+	}
+	public int getCommentNum() {
+		return commentNum;
+	}
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
 	}
 	public String getWriteDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");

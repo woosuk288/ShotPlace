@@ -7,23 +7,25 @@
 <mapper namespace="net.my.mybatis.BoardMapper">
 
 	<select id="getArticleList" parameterType="hashmap" resultType="Article">
-		SELECT articleno, title, regdate, hit, attachfilenum 
+		SELECT articleno, title, regdate, hit, attachfilenum, commentnum 
 		FROM (
 			SELECT rownum r, a.* 
 				FROM (
 					SELECT 
-						a.articleno, title, regdate, hit, 
-						count(distinct(f.attachfileno)) attachfilenum 
+						a.articleno, title, a.regdate, hit, 
+						count(distinct(f.attachfileno)) attachfilenum,
+						count(distinct(c.commentno)) commentnum
 					FROM 
-						article a, attachfile f 
+						article a, attachfile f, comments c
 					WHERE 
 						a.articleno = f.articleno(+) AND 
+						a.articleno = c.articleno(+) AND
 						boardcd = #{boardCd} 
 					<if test="searchWord != null">
 					AND (title LIKE '%${searchWord}%' OR
 					content LIKE '%${searchWord}%')
 					</if>
-					GROUP BY a.articleno, title, regdate, hit 
+					GROUP BY a.articleno, title, a.regdate, hit 
 					ORDER BY articleno DESC
 				) a
 		)
@@ -114,5 +116,31 @@
 	<delete id="deleteFile" parameterType="int">
 		DELETE FROM attachfile WHERE attachfileno = #{attachFileNo}
 	</delete>
+	
+	<insert id="insertComment" parameterType="Comment">
+		INSERT INTO comments (commentno, articleno, email, memo, regdate)
+		VALUES (seq_comments.nextval, #{articleNo}, #{email}, #{memo}, sysdate)
+	</insert>
+	
+	<update id="updateComment" parameterType="Comment">
+		UPDATE comments SET memo = #{memo} WHERE commentno = #{commentNo}
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM comments WHERE commentno = #{commentNo}
+	</delete>
+	
+	<select id="getComment" parameterType="int" resultType="Comment">
+		SELECT commentno,articleno,email,memo,regdate 
+		FROM comments 
+		WHERE commentno = #{commentNo}
+	</select>
+	
+	<select id="getCommentList" parameterType="int" resultType="Comment">
+		SELECT commentno, articleno, email, memo, regdate
+		FROM comments
+		WHERE articleno = #{articleNo}
+		ORDER BY commentno DESC
+	</select>
 			
 </mapper>

@@ -60,6 +60,21 @@ create sequence SEQ_ATTACHFILE
 increment by 1
 start with 1;
 
+-- 덧글
+create table comments (
+	commentno number,
+	articleno number,	
+	email varchar2(60),	
+	memo varchar2(4000),
+	regdate date, 
+	constraint PK_COMMENTS PRIMARY KEY(commentno)
+);
+
+-- 덧글 번호 생성기
+create sequence SEQ_COMMENTS
+	increment by 1
+	start with 1;
+
 commit 
 
 select * from board 

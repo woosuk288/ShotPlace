@@ -10,6 +10,7 @@
 		<typeAlias type="net.my.board.Board" alias="Board" />
 		<typeAlias type="net.my.board.Article" alias="Article"/>
 		<typeAlias type="net.my.board.AttachFile" alias="AttachFile" />
+		<typeAlias type="net.my.board.Comment" alias="Comment"/>
 	</typeAliases>
 
 	<mappers>
